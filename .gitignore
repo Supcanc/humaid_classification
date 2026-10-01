@@ -1,2 +1,5 @@
 # venv
 humaid-classification/
+
+# cache
+backend/__pycache__/
