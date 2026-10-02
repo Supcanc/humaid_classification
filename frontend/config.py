@@ -1,4 +1,4 @@
-PREDICT_URL = 'http://127.0.0.1:8000/predict/'
+PREDICT_URL = 'http://backend:8000/predict/'
 ID2LABEL = {
     0: 'injured_or_dead_people',
     1: 'rescue_volunteering_or_donation_effort',
