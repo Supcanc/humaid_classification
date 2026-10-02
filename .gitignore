@@ -3,3 +3,4 @@ humaid-classification/
 
 # cache
 backend/__pycache__/
+frontend/__pycache__/

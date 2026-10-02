@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import os
 import sys
@@ -13,12 +14,15 @@ from backend.config import MODEL_CHECKPOINT_PATH, ID2LABEL
 
 app = FastAPI()
 
+class TextForClassification(BaseModel):
+    string: str
+
 tokenizer = AutoTokenizer.from_pretrained(MODEL_CHECKPOINT_PATH)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_CHECKPOINT_PATH)
 
 @app.post('/predict/')
-def predict(texts):
-    model_inputs = tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
+def predict(text: TextForClassification):
+    model_inputs = tokenizer(text.string, padding=True, truncation=True, return_tensors='pt')
     model_outputs = model(**model_inputs)
 
     logits = model_outputs.logits
