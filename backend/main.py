@@ -1,16 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import os
-import sys
+from config import MODEL_CHECKPOINT_PATH, ID2LABEL
 import torch
-
-cur_dir = os.path.dirname(os.path.realpath(__file__))
-parent_dir = os.path.dirname(cur_dir)
-
-sys.path.append(parent_dir)
-
-from backend.config import MODEL_CHECKPOINT_PATH, ID2LABEL
 
 app = FastAPI()
 
