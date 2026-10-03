@@ -1,11 +1,11 @@
 services:
   backend:
-    build: 
-      context: backend
+    build: backend/
     ports: 
       - 8000:8000
   frontend:
-    build:
-      context: frontend/
+    build: frontend/
     ports: 
       - 8501:8501
+    depends_on: 
+      - backend

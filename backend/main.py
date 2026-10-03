@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from config import MODEL_CHECKPOINT_PATH, ID2LABEL
+import string
 import torch
 
 app = FastAPI()
@@ -11,10 +12,12 @@ class TextForClassification(BaseModel):
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_CHECKPOINT_PATH)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_CHECKPOINT_PATH)
+punkts = string.punctuation
 
 @app.post('/predict/')
 def predict(text: TextForClassification):
-    model_inputs = tokenizer(text.string, padding=True, truncation=True, return_tensors='pt')
+    cleaned_text = ''.join([char for char in text.string if char not in punkts])
+    model_inputs = tokenizer(cleaned_text, padding=True, truncation=True, return_tensors='pt')
     model_outputs = model(**model_inputs)
 
     logits = model_outputs.logits
